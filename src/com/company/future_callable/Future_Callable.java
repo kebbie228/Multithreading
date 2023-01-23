@@ -5,7 +5,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
-
+/*
 public class FutureCallable {
     public static void main(String[] args) {
         Callable<String> callable = ()->{
@@ -36,3 +36,5 @@ public class FutureCallable {
         }
     }
 }
+
+ */
