@@ -210,11 +210,15 @@ group by inv.item_id
 order by cc
 limit 1;
 --Предмет, который чаще всего встречается в инвентаре
-select
-i.name
-, count(inv.item_id) as cc
+selecti.name, count(inv.item_id) as cc
 from item as i, inventory as inv
 where (i.id=inv.item_id)
 group by inv.item_id
 order by cc desc
 limit 1;
+
+--ввывести прс и их расы
+select c.name, r.name
+from character as c
+inner join  race as r
+on(c.race_id=r.id);
