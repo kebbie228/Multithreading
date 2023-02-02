@@ -139,3 +139,82 @@ UPDATE item SET weight = (random()%100+100)/10;
 UPDATE item SET maximum = abs(random()%25)+1;
 
 create table inventory (id integer not null primary key autoincrement, character_id integer ,item_id integer);
+
+
+//Вывести имена персонажей и список предметов
+select  c.id,c.name, i.name
+from  character as c,item as i, inventory as inv
+where (c.id=inv.character_id) and (i.id=inv.item_id)and (c.id=2);
+
+
+select inv.item_id, c.name, i.name
+
+from character as c, item as i, inventory as inv
+where (c.id=inv.character_id) and (i.id=inv.item_id) and (c.id=2)
+order by inv.item_id;
+
+select count(*)
+from character as c, item as i, inventory as inv
+where (c.id=inv.character_id) and (i.id=inv.item_id) and (c.id=2);
+
+select count(*) from inventory where character_id=2;
+DELETE FROM item WHERE id=50;
+
+// Вывести всех персонажей, у которых в инвентаре содержатся предметы с редкостью 5
+select c.name, i.name, i.rarity
+from character as c, item as i, inventory as inv
+where (c.id=inv.character_id) and (i.id=inv.item_id) and (i.rarity=5);
+
+//вывести перс у которых есть glass
+select c.name, i.name
+from character as c, item as i, inventory as inv
+where (c.id=inv.character_id) and (i.id=inv.item_id) and (i.name='Glass')
+GROUP BY c.name
+order by c.name; //sort
+
+// вывести вес инвентаря у персонажа с id=2
+select c.name, sum(i.weight)
+from character as c, item as i, inventory as inv
+where (c.id=inv.character_id) and (i.id=inv.item_id) and (c.id=2)
+GROUP BY c.name
+order by c.name; //sort
+
+//общий вес всех инвентарей
+select  sum(i.weight)
+from item as i, inventory as inv
+where  (i.id=inv.item_id);
+
+--У каких персонажей количество вещей = 20...25 ???????
+select  c.name, count(i.id) as cc
+from character as c, item as i, inventory as inv
+where (c.id=inv.character_id) and (i.id=inv.item_id) and( cc=25)
+group by c.id;
+
+
+--Количество вещей у каждого персонажа
+select  c.name, count(i.id)
+from character as c, item as i, inventory as inv
+where (c.id=inv.character_id) and (i.id=inv.item_id)
+group by c.id;
+-- сколько вещей у второго перс
+select  c.name, count(i.id)
+from character as c, item as i, inventory as inv
+where (c.id=inv.character_id) and (i.id=inv.item_id) and(c.id=2)
+group by c.id;
+
+--Предмет, который реже всего встречается в инвентаре
+select  i.name, count(inv.item_id) as cc
+from item as i, inventory as inv
+where (i.id=inv.item_id)
+group by inv.item_id
+order by cc
+limit 1;
+--Предмет, который чаще всего встречается в инвентаре
+select
+i.name
+, count(inv.item_id) as cc
+from item as i, inventory as inv
+where (i.id=inv.item_id)
+group by inv.item_id
+order by cc desc
+limit 1;
