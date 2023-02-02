@@ -221,4 +221,13 @@ limit 1;
 select c.name, r.name
 from character as c
 inner join  race as r
-on(c.race_id=r.id);
+on(c.race_id=r.id)
+where(r.name='Orcs');
+
+// сколько прс разных рас
+select c.name, count(c.id)
+from character as c
+inner join  race as r
+on(c.race_id=r.id)
+
+group by r.name;
