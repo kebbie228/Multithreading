@@ -231,3 +231,133 @@ inner join  race as r
 on(c.race_id=r.id)
 
 group by r.name;
+
+
+https://github.com/KirillovItstep/classworks/tree/main/characters
+https://github.com/KirillovItstep/classworks/tree/main/characters
+https://github.com/KirillovItstep/classworks/tree/main/characters
+--Вывести персонажей, их расы и классы
+select count(*) from(select c.name, r.name, l.name
+
+from character as c, race as r, class as l
+where (c.race_id=r.id)and(c.class_id=l.id)
+);
+
+select count(*) from(select c.name, r.name, l.name
+
+from character as c
+inner join race as r
+on(c.race_id=r.id)
+inner join class as l
+on(c.class_id=l.id));
+
+--Сколько у каждого персонажа вещей в инвентаре?
+select c.name, count(i.id)
+from character as c, item as i, inventory as inv
+where (c.id=inv.character_id) and (i.id=inv.item_id)
+group by
+c.id;
+
+--У кого из эльфов имя начинается на "T"?
+select name from character where name Like'T%'and race_id=2 ;
+
+--У кого из воинов самое короткое имя?
+select c.name
+from character as c
+inner join class as l
+on (c.class_id=l.id)
+where l.name='Warrior'
+order  by length (c.name)
+limit 1;
+--Вывести список всех людей-лучников
+
+--Какой класс воинов самый распространенный у гномов?
+select c.name, r.name, l.name, count(l.id) as count
+from character as c
+inner join race as r
+on(c.race_id=r.id)
+inner join class as l
+on(c.class_id=l.id)
+where r.name='Dwarves'
+group by l.name
+order by count desc
+limit 1;
+
+--Вывести количество персонажей в каждой расе
+select r.name, count(c.id) as count
+from character as c
+inner join race as r
+on(c.race_id=r.id)
+group  by r.id;
+
+--Сколько персонажей не принадлежат к известной расе?
+select t.count from
+(select r.name, count(c.id) as count
+from character as c
+left join race as r
+on(c.race_id=r.id)
+group  by r.id) as t
+where t.name is null;
+
+select r.name, count(c.id) as count
+from character as c
+left join race as r
+on(c.race_id=r.id)
+group  by r.id
+having r.name is null;
+
+--У кого из гномов есть серебро?
+select c.name, r.name, i.name
+from character as c, item as i, race as r, inventory as inv
+where (c.id=inv.character_id) and (i.id=inv.item_id) and (i.name like '%Silver%') and (r.name = 'Dwarves');
+--Каждому гному раздать по серебряной руде (Silver ore)
+drop table if exists dwarves;
+create  temp table  dwarves as
+select c.id, (select id from item
+where name='Silver Ore')
+from character as c
+inner join race as r
+on(c.race_id=r.id)
+where r.name='Dwarves';
+insert into inventory(character_id,item_id)
+select  * from  dwarves;
+--Вывести по 3 самых тяжелых вещи в инвентаре для каждого персонажа
+drop table if exists weights;
+create temp table weights as
+select c.id,c.name,i.name, i.weight
+from character as c, item as i, inventory as inv
+where (c.id=inv.character_id) and (i.id=inv.item_id)
+order by c.name, i.weight desc;
+
+select * from weights as w
+where (select count(*) from weights where w.id=id and weight>=w.weight)<=3;
+--Удалить из инвентаря вещи, если их количество превышает 30 для одного персонажа
+
+drop table if exists chars;
+create temp table chars as
+select
+c.id
+,
+c.name
+, count(
+i.id
+)-30 as extra
+from character as c, inventory as inv, item as i
+where (c.id=inv.character_id)and(i.id=inv.item_id)
+group by
+c.name
+
+having extra>0;
+
+select
+inv.id
+,
+c.id
+ as character_id, ch.extra
+from character as c, inventory as inv, item as i, chars as ch
+where (c.id=inv.character_id) and (i.id=inv.item_id)and(
+ch.id=c.id
+)
+order by
+c.id
+;
