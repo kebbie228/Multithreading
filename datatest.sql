@@ -103,5 +103,26 @@ FROM character as c
 inner join race as r
 on(c.id=c.race_id)
 on(r.name='Elf')
-on(c.name Like'T%');
+and
+on(c.name='T%');
 -- правильный вариант select name from character where name Like'T%'and race_id=2 ;
+
+--У кого из воинов самое короткое имя?
+select c.name,cl.name
+FROM character as c, class as cl 
+WHERE(c.class_id=cl.id) and (cl.name='Warrior')
+
+order by LENGTH(c.name) 
+limit 1;
+--Вывести список всех людей-лучников
+select c.id, c.name, cl.name, r.name
+from character as c, class as cl, race as r
+where(c.class_id=cl.id) and (cl.name='Archer') and ( c.race_id=r.id) and (r.name='Humans')
+GROUP by c.id;
+
+select c.id, c.name, cl.name, r.name
+FROM character as c
+inner join class as cl 
+on(c.class_id=cl.id)
+inner join class as cl 
+on(cl.id=cl.name='Archer');
