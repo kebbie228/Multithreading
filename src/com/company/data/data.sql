@@ -388,3 +388,7 @@ log-error = "D:\\Program Files\\MySQL\\mysql\\logs\\error_log.err"
 user = "root"
 port = "3306"
  */
+
+ https://github.com/KirillovItstep/classworks/tree/main/students
+ https://github.com/KirillovItstep/classworks/tree/main/students
+ https://github.com/KirillovItstep/classworks/tree/main/students
