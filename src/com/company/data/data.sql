@@ -392,3 +392,5 @@ port = "3306"
  https://github.com/KirillovItstep/classworks/tree/main/students
  https://github.com/KirillovItstep/classworks/tree/main/students
  https://github.com/KirillovItstep/classworks/tree/main/students
+
+ web https://github.com/KirillovItstep/classworks/tree/main/web_sql
