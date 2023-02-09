@@ -361,3 +361,30 @@ ch.id=c.id
 order by
 c.id
 ;
+
+/*
+Установка mysql
+Скачать архив .zip нужной версии
+https://downloads.mysql.com/archives/community/
+
+Extract the downloaded MySQL Server Archive to the desired location
+Create a directory for MySQL's database's data files (example : D:\mysql\mydb)
+Create a directory for MySQL's database logging (example D:\mysql\logs)
+Create MySQL options file (example location : D:\mysql\config.ini)
+config.ini:
+[mysqld]
+sql_mode = NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES
+# set basedir to your installation path
+basedir = "D:\\Program Files\\MySQL\\mysql"
+# set datadir to the location of your data directory
+datadir = "D:\\Program Files\\MySQL\\mysql\\data"
+# The port number to use when listening for TCP/IP connections. On Unix and Unix-like systems, the port number must be
+# 1024 or higher unless the server is started by the root system user.
+port = "3306"
+# Log errors and startup messages to this file.
+log-error = "D:\\Program Files\\MySQL\\mysql\\logs\\error_log.err"
+
+[mysqladmin]
+user = "root"
+port = "3306"
+ */
