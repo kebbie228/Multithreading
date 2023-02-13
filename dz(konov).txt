@@ -1,0 +1,34 @@
+--Напишите запрос в sql, чтобы отобразить id и имена менеджеров всех сотрудников.
+select e1.id,e1.name, e2.name
+from employer as e1 
+join employer as e2
+on(e1.manager_id=e2.id);
+
+
+--напишите запрос в sql, чтобы перечислить всех сотрудников 2 и 3 классов.
+
+SELECT e.id, e.name,s.grade
+ from employer as e ,salary_grade as s 
+ where (s.grade>=2) and  (s.grade<=3);
+
+--напишите запрос в sql, чтобы найти информацию о наиболее высокооплачиваемом сотрудник
+SELECT e.id, e.name,e.salary,s.grade
+ from employer as e ,salary_grade as s 
+ where(s.grade=5)
+ order by e.salary desc 
+ limit 1;
+--Напишите запрос в SQL, чтобы перечислить имена сотрудников, которые получают самую высокую зарплату в каждом отделе
+
+select e.name,max(e.salary),d.name
+from employer as e 
+join department as d
+on(e.department_id=d.id)
+group by d.name; 
+
+--Напишите запрос в SQL, чтобы найти отдел, где нет сотрудников
+select e.name, d.name
+from employer as e 
+right join department as d
+on(e.department_id=d.id) 
+order by d.name desc 
+limit 1;
